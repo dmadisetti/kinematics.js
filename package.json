@@ -1,0 +1,19 @@
+{
+  "name": "kinematics",
+  "version": "1.0.0",
+  "description": "Library to compute, and render to canvas known cases of mechanical systems",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "author": "Dylan Madisetti",
+  "license": "MIT",
+  "dependencies": {
+    "grunt": "^1.0.1",
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-concat": "^1.0.0",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-qunit": "^1.1.0",
+    "grunt-contrib-uglify": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0"
+  }
+}

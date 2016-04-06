@@ -1,0 +1,67 @@
+<!doctype>
+<html>
+<head>
+    <title>Kinematics Visualization</title>
+    <script type="text/javascript" src="https://code.jquery.com/qunit/qunit-1.17.1.js"></script>-
+    <script type="text/javascript" src="kinematics.min.js"></script>
+</head>
+<body>
+
+    <canvas id='canvas'></canvas>
+
+    <script type="text/javascript">
+
+        // Create Canvases 
+        function context(){
+            var canvas = document.createElement("canvas"),
+                context = canvas.getContext("2d");
+
+            canvas.width  = document.body.clientWidth;
+            canvas.height = canvas.width/2;
+
+            document.body.appendChild(canvas);
+            return context;
+        }
+
+        // Test against known cases
+        QUnit.test( "FourBar", function( assert ) {
+            var k = new Kinematics(context()),
+                fourBar = new k.FourBar(100, 200, 150, 250),
+                acc = new fourBar.Acceleration(k.rad(80),7.5,-2.5);
+
+            // Crossed
+            assert.ok(acc.crossed.a[2] == -2.5);
+            assert.ok(acc.crossed.a[3] == 25.02730443616864);
+            assert.ok(acc.crossed.a[4] == 18.105217625284286);
+
+            // Open
+            assert.ok(acc.open.a[2] == -2.5);
+            assert.ok(acc.open.a[3] == 10.233799364894818);
+            assert.ok(acc.open.a[4] == 17.155886175779145);
+            
+            // Try to animate
+            fourBar.animate("crossed");
+
+        });
+
+        QUnit.test( "CrankSlide", function( assert ) {
+            var k = new Kinematics(context()),
+                crankSlide = new k.CrankSlide(90, 150, 30),
+                acc = new crankSlide.Acceleration(k.rad(30), 3.5, -1.0);
+
+            // Crossed
+            assert.ok(acc.crossed.a[2] == -1);
+            assert.ok(acc.crossed.a[3] == -3.8799729415740054);
+
+            // Open
+            assert.ok(acc.open.a[2] == -1);
+            assert.ok(acc.open.a[3] == 3.8799729415740054);
+
+            // Try to animate
+            crankSlide.animate("crossed");
+
+        });
+
+    </script>
+</body>
+</html>
