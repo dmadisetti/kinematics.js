@@ -4,6 +4,7 @@
     <title>Kinematics Visualization</title>
     <script type="text/javascript" src="https://code.jquery.com/qunit/qunit-1.17.1.js"></script>-
     <script type="text/javascript" src="kinematics.min.js"></script>
+
 </head>
 <body>
 
@@ -23,11 +24,18 @@
             return context;
         }
 
+        function eq (a, b, sig) {
+            var e = sig || 0.01;
+            console.log(a,b, a-b,e);
+            console.log('---------');
+            return Math.abs(a-b) < e;
+        }
+
         // Test against known cases
         QUnit.test( "FourBar", function( assert ) {
             var k = new Kinematics(context()),
                 fourBar = new k.FourBar(100, 200, 150, 250),
-                acc = new fourBar.Acceleration(k.rad(80),7.5,-2.5);
+                acc = fourBar.accelerate(k.rad(80),7.5,-2.5);
 
             // Crossed
             assert.ok(acc.crossed.a[2] == -2.5);
@@ -47,7 +55,7 @@
         QUnit.test( "CrankSlide", function( assert ) {
             var k = new Kinematics(context()),
                 crankSlide = new k.CrankSlide(90, 150, 30),
-                acc = new crankSlide.Acceleration(k.rad(30), 3.5, -1.0);
+                acc = crankSlide.accelerate(k.rad(30), 3.5, -1.0);
 
             // Crossed
             assert.ok(acc.crossed.a[2] == -1);
@@ -61,6 +69,42 @@
             crankSlide.animate("crossed");
 
         });
+
+        QUnit.test( "Coriolis.forward", function( assert ) {
+            var k = new Kinematics(context()),
+                coriolis = new k.Coriolis("forward"),
+                acc = coriolis.accelerate(k.rad(45), 2, 15, 20, -5, -50);
+
+            // Velocity
+            assert.ok(eq(acc.V.total.m, 36.056));
+            assert.ok(eq(acc.V.total.o, k.rad(101.31)));
+
+            // Acceleration
+            assert.ok(eq(acc.total.m, 773.369));
+            assert.ok(eq(acc.total.o, k.rad(175.28)));
+
+            // Try to animate
+            coriolis.animate();
+
+        });
+
+
+//        QUnit.test( "Coriolis.backward", function( assert ) {
+//            var k = new Kinematics(context()),
+//                coriolis = new k.Coriolis("backwards"),
+//                acc = coriolis.accelerate(k.rad(130), 6, new k.Vector(65, k.rad(62.62)), new k.Vector(779.441,k.rad(-14.556)));
+//
+//            // Velocity
+//            assert.ok(eq(acc.V.v,  25));
+//            assert.ok(eq(acc.V.w, -10));
+//
+//            // Acceleration
+//            assert.ok(eq(acc.ac, -35));
+//            assert.ok(eq(acc.a,    8));
+//
+//            // Try to animate
+//            coriolis.animate();
+//        });
 
     </script>
 </body>

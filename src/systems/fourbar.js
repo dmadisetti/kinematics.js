@@ -100,4 +100,5 @@ this.FourBar = function(a,b,c,d){
         crunch(this, CRSS);
         system.A = this;
     };
+    this.accelerate = function(o2,w2,a2){new this.Acceleration(o2,w2,a2); return this.A;};
 };

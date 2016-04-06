@@ -5,19 +5,33 @@ System.prototype = {
     Position: function(){},
     Velocity: function(){},
     Acceleration: function(){},
+    accelerate: function(){},
 
     draw: function(offset, link, color){
         context.strokeStyle = color;
         context.beginPath();
         context.moveTo(offset.x, offset.y);
         context.lineTo(offset.x + link.x, offset.y + link.y);
+        context.closePath();
         context.stroke();
     },
+
+    point: function(V, r, color){
+        context.beginPath();
+        context.arc(V.x, V.y, r, 0, 2*pi, false);
+        context.fillStyle = color;
+        context.strokeStyle = color;
+        context.fill();
+        context.fillStyle = null;
+        context.closePath();
+    },
+
     connect: function(start, end, color){
         context.strokeStyle = color;
         context.beginPath();
         context.moveTo(start.x, start.y);
         context.lineTo(end.x, end.y);
+        context.closePath();
         context.stroke();
     },
 
@@ -25,7 +39,7 @@ System.prototype = {
         var a,b,c,x,y;
         context.clearRect(0, 0, x = context.canvas.width, y = context.canvas.height);
         var system = this,
-            offset = new Vector(hyp(x,y)/2, tan(y/x)); // TODO: remove arbitrary offset
+            offset = new Vector(hyp(x,y)/2, tan(y/x));
 
 
         // Expand to more than 4 bar
@@ -38,7 +52,7 @@ System.prototype = {
         } else {}
 
         system.step(1e-2, instance);
-        window.setTimeout(function(){system.animate(instance,delta);}, 10);
+        window.setTimeout(function(){system.animate(instance,delta);}, 25);
     },
 
     step: function(delta, instance){

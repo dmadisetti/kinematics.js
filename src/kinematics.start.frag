@@ -1,13 +1,14 @@
 var Kinematics = function(context){
-    var sin  = Math.sin;
-    var cos  = Math.cos;
-    var tan  = Math.tan;
-    var atan = Math.atan;
-    var asin = Math.asin;
-    var sqrt = Math.sqrt;
-    var pi   = Math.PI;
-    var hyp  = Math.hypot || function(a,b){return sqrt(a*a+b*b);};
-    var sr   = function(x){return x*x;};
+    var sin   = Math.sin;
+    var cos   = Math.cos;
+    var tan   = Math.tan;
+    var atan  = Math.atan;
+    var atan2 = Math.atan2;
+    var asin  = Math.asin;
+    var sqrt  = Math.sqrt;
+    var pi    = Math.PI;
+    var hyp   = Math.hypot || function(a,b){return sqrt(a*a+b*b);};
+    var sr    = function(x){return x*x;};
 
     var OPEN = "open";
     var CRSS = "crossed";

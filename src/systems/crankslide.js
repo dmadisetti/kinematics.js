@@ -63,4 +63,5 @@ this.CrankSlide = function(a,b,c){
         crunch(this, OPEN);
         system.A = this;
     };
+    this.accelerate = function(o2,w2,a2){new this.Acceleration(o2,w2,a2); return this.A;};
 };
